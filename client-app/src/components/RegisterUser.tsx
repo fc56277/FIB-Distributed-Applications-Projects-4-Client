@@ -1,29 +1,30 @@
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { REGISTER_USER_URL } from '../config/constants';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
 
-const Login = () => {
+const RegisterUser = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const { username, password } = Object.fromEntries(data.entries());
     console.log({ username, password });
-    alert(`You're seeing this because you tried to login!\n Username: ${username}\n Password: ${password}. \nLogin isn't implemented yet, so you can't login.`);
+    alert(`You're seeing this because you tried to register!\n Username: ${username}\n Password: ${password}. \nRegister isn't implemented yet, so you can't register.`);
 
     // This part will be responsible for sending the data to the server
-    const response = await fetch('http://localhost:3000/api/login', {
+    const response = await fetch('http://localhost:3000/api/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -50,7 +51,7 @@ const Login = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Register
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -79,15 +80,8 @@ const Login = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Register
             </Button>
-            <Grid container>
-              <Grid item>
-                <Link href={REGISTER_USER_URL} variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>
@@ -95,4 +89,4 @@ const Login = () => {
   );
 }
 
-export default Login;
+export default RegisterUser;
