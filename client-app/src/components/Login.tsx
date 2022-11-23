@@ -10,28 +10,33 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { REGISTER_USER_URL } from '../config/constants';
+import { REGISTER_USER_URL, SERVER_ENDPOINTS } from '../config/constants';
+import axios from 'axios';
 
 const theme = createTheme();
 
 const Login = () => {
+  const { loginUrl } = SERVER_ENDPOINTS;
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const { username, password } = Object.fromEntries(data.entries());
     console.log({ username, password });
-    alert(`You're seeing this because you tried to login!\n Username: ${username}\n Password: ${password}. \nLogin isn't implemented yet, so you can't login.`);
 
     // This part will be responsible for sending the data to the server
-    const response = await fetch('http://localhost:3000/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept': 'application/json',
+    };
+    const requestBody = new URLSearchParams({
+      username: username as string,
+      password: password as string
     });
-    const result = await response.json();
+    const response = await axios.post(loginUrl, requestBody, { headers });
+    const result = await response.data;
     console.log(result);
+    alert(`Login finished with result: ${result}`);
   };
 
   return (
