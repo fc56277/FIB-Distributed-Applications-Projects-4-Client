@@ -36,3 +36,6 @@ const ModifyImage = () => {
     const result = await response.json();
     console.log(result);
   };
+}
+
+export default ModifyImage;

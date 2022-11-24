@@ -35,3 +35,6 @@ const DeleteImage = () => {
     const result = await response.json();
     console.log(result);
   };
+}
+
+export default DeleteImage;

@@ -16,6 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme();
 
 const ListImages = () => {
+  const filename = '';
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     //const data = new FormData(event.currentTarget);
@@ -35,3 +36,6 @@ const ListImages = () => {
     const result = await response.json();
     console.log(result);
   };
+}
+
+export default ListImages;

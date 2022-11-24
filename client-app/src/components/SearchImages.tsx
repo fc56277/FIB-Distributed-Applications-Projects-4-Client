@@ -67,7 +67,7 @@ const SearchImages = () => {
               autoComplete="filename"
             />
             <Button
-              type="search"
+              // type="search" | Button has no type attribute
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
