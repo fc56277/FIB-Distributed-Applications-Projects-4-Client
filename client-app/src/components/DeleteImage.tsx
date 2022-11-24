@@ -35,6 +35,10 @@ const DeleteImage = () => {
     const result = await response.json();
     console.log(result);
   };
+
+  return (
+    <div>Not implemented</div>
+  );
 }
 
 export default DeleteImage;
