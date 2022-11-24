@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 const NavBar = (props: NavBarProps) => {
   const classes = useStyles();
   const endpoints = props.endpoints;
-  console.log(endpoints);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {

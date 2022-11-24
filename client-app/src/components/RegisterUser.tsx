@@ -7,28 +7,39 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 import * as React from 'react';
+import { SERVER_ENDPOINTS } from '../config/constants';
 
 const theme = createTheme();
 
 const RegisterUser = () => {
+  const { registerUserUrl: apiRegisterUrl } = SERVER_ENDPOINTS;
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const { username, password } = Object.fromEntries(data.entries());
     console.log({ username, password });
-    alert(`You're seeing this because you tried to register!\n Username: ${username}\n Password: ${password}. \nRegister isn't implemented yet, so you can't register.`);
 
     // This part will be responsible for sending the data to the server
-    const response = await fetch('http://localhost:3000/api/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept': 'application/json',
+    };
+    const requestBody = new URLSearchParams({
+      username: username as string,
+      password: password as string
     });
-    const result = await response.json();
+    const response = await axios.post(apiRegisterUrl, requestBody, { headers })
+                        .catch(error => {
+                          console.log(error);
+                          alert(`Register finished with error: ${error}`);
+                          throw error;
+                        });
+    const result = await response.data;
     console.log(result);
+    alert(`Login finished with result: ${result}`);
   };
 
   return (
