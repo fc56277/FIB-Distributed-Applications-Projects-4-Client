@@ -45,7 +45,7 @@ const CLIENT_ENDPOINTS: Endpoint[] = [
     }
 ];
 
-const API_BASE = 'http://localhost:8080/RestAD-1.0-SNAPSHOT';
+const API_BASE = 'http://localhost:8080/RestADServer4';
 
 const SERVER_ENDPOINTS = {
     pingUrl: `${API_BASE}/api/ping`,
