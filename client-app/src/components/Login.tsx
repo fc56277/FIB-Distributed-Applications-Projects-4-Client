@@ -10,13 +10,20 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { REGISTER_USER_URL, SERVER_ENDPOINTS } from '../config/constants';
+import { CLIENT_ENDPOINTS, SERVER_ENDPOINTS } from '../config/constants';
 import axios from 'axios';
 
 const theme = createTheme();
 
 const Login = () => {
-  const { loginUrl } = SERVER_ENDPOINTS;
+  const { loginUrl: loginApiUrl } = SERVER_ENDPOINTS;
+  const client_endpoints = CLIENT_ENDPOINTS;
+  // Find the first element where the name is similar to "register user"
+  const registerUserEndpoint = client_endpoints.find((endpoint) => endpoint.displayName.toLowerCase().includes('register user'));
+  if (!registerUserEndpoint) {
+    throw new Error('Register user endpoint not found');
+  };
+
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,7 +40,7 @@ const Login = () => {
       username: username as string,
       password: password as string
     });
-    const response = await axios.post(loginUrl, requestBody, { headers });
+    const response = await axios.post(loginApiUrl, requestBody, { headers });
     const result = await response.data;
     console.log(result);
     alert(`Login finished with result: ${result}`);
@@ -88,7 +95,7 @@ const Login = () => {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href={REGISTER_USER_URL} variant="body2">
+                <Link href={registerUserEndpoint.route} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

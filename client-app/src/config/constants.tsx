@@ -2,27 +2,61 @@ import DeleteImage from "../components/DeleteImage";
 import ListImages from "../components/ListImages";
 import Login from "../components/Login";
 import ModifyImage from "../components/ModifyImage";
-import NavBar from "../components/NavBar"; // Menu
 import RegisterImage from "../components/RegisterImage";
 import RegisterUser from "../components/RegisterUser";
 import SearchImages from "../components/SearchImages";
+import { Endpoint } from "../types/NavBarTypes";
 
-const DEFAULT_COMPONENTS = [Login, RegisterUser, NavBar, RegisterImage, ListImages, ModifyImage, DeleteImage, SearchImages];
-const DEFAULT_ROUTES = ['Login', 'Register User', 'NavBar', 'Register Image', 'List Images', 'Modify Image', 'Delete Image', 'Search Images'];
-const REGISTER_USER_URL = DEFAULT_ROUTES[1];
+const CLIENT_ENDPOINTS: Endpoint[] = [
+    {
+        displayName: 'Login',
+        route: '/login',
+        component: Login,
+    },
+    {
+        displayName: 'Register User',
+        route: '/register-user',
+        component: RegisterUser,
+    },
+    {
+        displayName: 'Register Image',
+        route: '/register-image',
+        component: RegisterImage,
+    },
+    {
+        displayName: 'List Images',
+        route: '/list-images',
+        component: ListImages,
+    },
+    {
+        displayName: 'Modify Image',
+        route: '/modify-image',
+        component: ModifyImage,
+    },
+    {
+        displayName: 'Delete Image',
+        route: '/delete-image',
+        component: DeleteImage,
+    },
+    {
+        displayName: 'Search Images',
+        route: '/search-images',
+        component: SearchImages
+    }
+];
 
-const base = 'http://localhost:8080/RestAD-1.0-SNAPSHOT';
+const API_BASE = 'http://localhost:8080/RestAD-1.0-SNAPSHOT';
 
 const SERVER_ENDPOINTS = {
-    pingUrl: `${base}/api/ping`,
-    registerUserUrl: `${base}/api/user/register`,
-    loginUrl: `${base}/api/user/login`,
-    menuUrl: `${base}/api/menu`,
-    registerImageUrl: `${base}/api/registerImage`,
-    listImagesUrl: `${base}/api/list`,
-    modifyImagesUrl: `${base}/api/modify`,
-    deleteImageUrl: `${base}/api/delete`,
-    searchImageUrl: `${base}/api/search`,
+    pingUrl: `${API_BASE}/api/ping`,
+    registerUserUrl: `${API_BASE}/api/user/register`,
+    loginUrl: `${API_BASE}/api/user/login`,
+    menuUrl: `${API_BASE}/api/menu`,
+    registerImageUrl: `${API_BASE}/api/registerImage`,
+    listImagesUrl: `${API_BASE}/api/list`,
+    modifyImagesUrl: `${API_BASE}/api/modify`,
+    deleteImageUrl: `${API_BASE}/api/delete`,
+    searchImageUrl: `${API_BASE}/api/search`,
 }
 
-export { DEFAULT_COMPONENTS, DEFAULT_ROUTES, REGISTER_USER_URL, SERVER_ENDPOINTS };
+export { CLIENT_ENDPOINTS, SERVER_ENDPOINTS };

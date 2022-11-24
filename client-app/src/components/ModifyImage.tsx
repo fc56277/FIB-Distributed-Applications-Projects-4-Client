@@ -39,7 +39,7 @@ const ModifyImage = () => {
 
   return (
     <div>Not implemented</div>
-  )
+  );
 }
 
 export default ModifyImage;

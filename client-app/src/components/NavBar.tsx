@@ -12,7 +12,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { DEFAULT_ROUTES } from '../config/constants';
+import { NavBarProps } from '../types/NavBarTypes';
+
 
 const useStyles = makeStyles((theme: Theme) => ({
   flexGrow: {
@@ -26,8 +27,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-const NavBar = () => {
+const NavBar = (props: NavBarProps) => {
   const classes = useStyles();
+  const endpoints = props.endpoints;
+  console.log(endpoints);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -72,20 +75,20 @@ const NavBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {DEFAULT_ROUTES.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {endpoints.map((endpoint) => (
+                <MenuItem key={endpoint.displayName} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{endpoint.displayName}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {DEFAULT_ROUTES.map((page) => (
+            {endpoints.map((endpoint) => (
               <Button
-                key={page}
+                key={endpoint.displayName}
                 className={classes.button}
                 component={Link}
-                to={page}
+                to={endpoint.route}
                 sx={{
                   color: 'white',
                   my: 2,
@@ -96,7 +99,7 @@ const NavBar = () => {
                 }
                 }}
               >
-                {page}
+                {endpoint.displayName}
               </Button>
             ))}
           </Box>
