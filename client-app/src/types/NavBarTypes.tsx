@@ -1,7 +1,7 @@
 type Endpoint = {
     displayName: string,
     route: string,
-    component: () => JSX.Element
+    component: (props?: any) => JSX.Element
 };
 
 interface NavBarProps {

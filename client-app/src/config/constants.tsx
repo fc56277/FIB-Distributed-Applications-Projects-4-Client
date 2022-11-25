@@ -7,17 +7,19 @@ import RegisterUser from "../components/RegisterUser";
 import SearchImages from "../components/SearchImages";
 import { Endpoint } from "../types/NavBarTypes";
 
-const CLIENT_ENDPOINTS: Endpoint[] = [
-    {
-        displayName: 'Login',
-        route: '/login',
-        component: Login,
-    },
-    {
-        displayName: 'Register User',
-        route: '/register-user',
-        component: RegisterUser,
-    },
+const LOGIN_ENDPOINT: Endpoint = {
+    displayName: 'Login',
+    route: '/login',
+    component: Login,
+};
+
+const REGISTER_ENDPOINT: Endpoint = {
+    displayName: 'Register User',
+    route: '/register-user',
+    component: RegisterUser,
+};
+
+const GENERIC_CLIENT_ENDPOINTS: Endpoint[] = [
     {
         displayName: 'Register Image',
         route: '/register-image',
@@ -59,4 +61,4 @@ const SERVER_ENDPOINTS = {
     searchImageUrl: `${API_BASE}/api/search`,
 }
 
-export { CLIENT_ENDPOINTS, SERVER_ENDPOINTS };
+export { GENERIC_CLIENT_ENDPOINTS, LOGIN_ENDPOINT, REGISTER_ENDPOINT, SERVER_ENDPOINTS };

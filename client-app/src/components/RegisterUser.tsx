@@ -7,9 +7,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import axios from 'axios';
 import * as React from 'react';
 import { SERVER_ENDPOINTS } from '../config/constants';
+import { apiPost } from '../utils/requests';
 
 const theme = createTheme();
 
@@ -20,7 +20,6 @@ const RegisterUser = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const { username, password } = Object.fromEntries(data.entries());
-    console.log({ username, password });
 
     // This part will be responsible for sending the data to the server
     const headers = {
@@ -31,15 +30,8 @@ const RegisterUser = () => {
       username: username as string,
       password: password as string
     });
-    const response = await axios.post(apiRegisterUrl, requestBody, { headers })
-                        .catch(error => {
-                          console.log(error);
-                          alert(`Register finished with error: ${error}`);
-                          throw error;
-                        });
-    const result = await response.data;
-    console.log(result);
-    alert(`Login finished with result: ${result}`);
+    const response = await apiPost(requestBody, apiRegisterUrl, headers, 'User-registration failed in POST request');
+    alert(`User-registration finished with result: ${response?.data.message}`);
   };
 
   return (

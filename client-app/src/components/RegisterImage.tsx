@@ -12,10 +12,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { GenericProps } from '../types/GenericTypes';
+import { redirect } from 'react-router-dom';
 
 const theme = createTheme();
 
-const RegisterImage = () => {
+const RegisterImage = (props: GenericProps) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
