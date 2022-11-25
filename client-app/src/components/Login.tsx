@@ -17,7 +17,7 @@ import { apiPost } from '../utils/requests';
 
 const theme = createTheme();
 
-const Login = ({updateStateCallback}: LoginProps) => {
+const Login = ({ updateStateCallback }: LoginProps) => {
   const { loginUrl: loginApiUrl } = SERVER_ENDPOINTS;
   const registerUserEndpoint = REGISTER_ENDPOINT;
 
@@ -38,33 +38,18 @@ const Login = ({updateStateCallback}: LoginProps) => {
       password: password as string
     });
     const response = await apiPost(requestBody, loginApiUrl, headers, 'Login failed in POST request');
+    console.log(JSON.stringify(response));
+    console.log(JSON.stringify(response?.headers));
     // The following part is to check if the username-header value (which gets set by the server) actually
     // exists. If it does, then we update the state of the parent-component, namely App.tsx - so that it can
     // pass it down to its children (the other pages). If it doesn't exist, then we don't update the parent,
     // but we just show an alert that even though we logged in, the header did not get set properly
-    if (response) {
-      if (response.headers && response.headers !== undefined) {
-        const headers = response.headers.toJSON;
-        const asd = headers as ((asStrings?: boolean | undefined) => any);
-        const a = asd();
-        console.log(`Checking type of headers-object: ${typeof headers}`);
-        console.log(`Checking contents of headers-object: ${JSON.stringify(headers)}`);
-        if ((response.headers.has??('username')) || false) {
-          // If value exists, then extract it. If not, replace with default ''
-          const usernameHeader = ''; // ((response.headers.get??('username')) || '');
-          
-          if (usernameHeader.length === 0) {
-            console.error('Parsing header failed - header existed, but could not extract value');
-          } else {
-            console.log('Succesfully extracted header. Updating state.');
-            updateStateCallback(usernameHeader);
-          }
-        } else {
-          console.error('Response from login - username-header was not found');
-        }
-      }
+    const token = response?.headers['username'];
+    if (token) {
+      updateStateCallback(token);
+    } else {
+      alert('Login failed, failed in POST-request');
     }
-
   };
 
   return (

@@ -13,11 +13,15 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { GenericProps } from '../types/GenericTypes';
-import { redirect } from 'react-router-dom';
+import { Navigate, redirect } from 'react-router-dom';
 
 const theme = createTheme();
 
 const RegisterImage = (props: GenericProps) => {
+  // Navigate/redirect user if token is empty
+  if (!props.headerToken || props.headerToken.length === 0) {
+    return (<Navigate to={'/'}/>);
+  }
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

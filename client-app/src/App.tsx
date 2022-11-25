@@ -31,14 +31,14 @@ function App() {
           <Route
             key={login.route}
             path={login.route}
-            element={login.component(updateToken)} // Pass updateToken-function down to the component as a callback function
+            element={login.component({ updateStateCallback: (token: string) => updateToken(token) })} // Pass updateToken-function down to the component as a callback function
           />
           <Route 
             key={register.route}
             path={register.route}
             element={register.component()}
           />
-          {isLoggedIn && endpoints.map((endpoint) => (
+          {endpoints.map((endpoint) => (
             <Route
               key={endpoint.route}
               path={endpoint.route}
