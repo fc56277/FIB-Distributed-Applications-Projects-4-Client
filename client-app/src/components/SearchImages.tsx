@@ -8,29 +8,34 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import { SERVER_ENDPOINTS } from '../config/constants';
+import { apiPost } from '../utils/requests';
 
 const theme = createTheme();
 
 const SearchImages = () => {
+	
+	const SearchImages = () => {
+		const { searchImageUrl: apiSearchUrl } = SERVER_ENDPOINTS; 
+				
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // If no time, implement only one of the searches by filename i.e.
-    const {filename} = Object.fromEntries(data.entries());
+    const { filename } = Object.fromEntries(data.entries());
     console.log({filename});
     alert(`You're seeing this because you tried to search for an Image!\n Filename: ${filename}\n. \SearchImages isn't implemented yet, so you can't search for an Image.`);
 
-    // This part will be responsible for sending the data to the server
-                                                // Why not 8080???
-    const response = await fetch('http://localhost:3000/RestAD-1.0-SNAPSHOT/api/searchImages', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({filename})
+	// This part will be responsible for sending the data to the server
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept': 'application/json',
+    };
+    const requestBody = new URLSearchParams({
+      filename: filename as string,
     });
-    const result = await response.json();
-    console.log(result);
+    const response = await apiPost(requestBody, apiSearchUrl, headers, 'Image-Search failed in POST request');
+    alert(`Image-Search finished with result: ${response?.data.message}`);
   };
 
   return (
@@ -63,7 +68,7 @@ const SearchImages = () => {
               autoComplete="filename"
             />
             <Button
-              // type="search" | Button has no type attribute
+              // type = "button" || 
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
