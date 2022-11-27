@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { SERVER_ENDPOINTS } from '../config/constants';
 import { GenericProps } from '../types/GenericTypes';
 import { fileToBase64 } from '../utils/file';
@@ -17,9 +18,9 @@ const theme = createTheme();
 
 const RegisterImage = (props: GenericProps) => {
   // Navigate/redirect user if token is empty
-  // if (!props.headerToken || props.headerToken.length === 0) {
-  //   return <Navigate to={'/'} />;
-  // }
+  if (!props.headerToken || props.headerToken.length === 0) {
+    return <Navigate to={'/'} />;
+  }
   const [file, setFile] = useState<File | null>(null);
   const { registerImageUrl } = SERVER_ENDPOINTS;
 
@@ -87,12 +88,19 @@ const RegisterImage = (props: GenericProps) => {
 
     console.debug(JSON.stringify(requestBody));
 
-    const response = axios.post(registerImageUrl, requestBody, {
+    const response = await axios.post(registerImageUrl, requestBody, {
       headers: {
-        username: props.headerToken,
+        // prettier-ignore
+        'username': props.headerToken,
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     });
+
+    // Check if the response status is 400-500 range
+    if (response.status >= 400 && response.status < 510) {
+      alert('Failed to register image');
+      return;
+    }
 
     alert('Image successfully registered');
     console.log(JSON.stringify(response));
