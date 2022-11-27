@@ -23,9 +23,17 @@ const SearchImages = () => {
     const data = new FormData(event.currentTarget);
     // If no time, implement only one of the searches by filename i.e.
     const { filename } = Object.fromEntries(data.entries());
+<<<<<<< HEAD
     console.log({filename});
     alert(`You're seeing this because you tried to search for an Image!\n Filename: ${filename}\n. \SearchImages isn't implemented yet, so you can't search for an Image.`);
+=======
+    console.log({ filename });
+    alert(
+      `You're seeing this because you tried to search for an Image!\n Filename: ${filename}\n. SearchImages isn't implemented yet, so you can't search for an Image.`
+    );
+>>>>>>> branch 'master' of https://github.com/fc56277/FIB-Distributed-Applications-Projects-4-Client.git
 
+<<<<<<< HEAD
 	// This part will be responsible for sending the data to the server
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -33,6 +41,16 @@ const SearchImages = () => {
     };
     const requestBody = new URLSearchParams({
       filename: filename as string,
+=======
+    // This part will be responsible for sending the data to the server
+    // Why not 8080???
+    const response = await fetch('http://localhost:3000/RestAD-1.0-SNAPSHOT/api/searchImages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ filename })
+>>>>>>> branch 'master' of https://github.com/fc56277/FIB-Distributed-Applications-Projects-4-Client.git
     });
     const response = await apiPost(requestBody, apiSearchUrl, headers, 'Image-Search failed in POST request');
     alert(`Image-Search finished with result: ${response?.data.message}`);
@@ -47,9 +65,8 @@ const SearchImages = () => {
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+            alignItems: 'center'
+          }}>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -57,7 +74,6 @@ const SearchImages = () => {
             Search
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            
             <TextField
               margin="normal"
               required
@@ -71,8 +87,7 @@ const SearchImages = () => {
               // type = "button" || 
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+              sx={{ mt: 3, mb: 2 }}>
               Search
             </Button>
           </Box>
@@ -80,6 +95,6 @@ const SearchImages = () => {
       </Container>
     </ThemeProvider>
   );
-}
+};
 
 export default SearchImages;
