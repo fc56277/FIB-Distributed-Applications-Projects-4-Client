@@ -19,8 +19,8 @@ const SearchImages = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // If no time, implement only one of the searches by filename i.e.
-    const { filename } = Object.fromEntries(data.entries());
+    // If no time, implement only one of the searches by title i.e.
+    const { title } = Object.fromEntries(data.entries());
 
 	// This part will be responsible for sending the data to the server
     const headers = {
@@ -29,7 +29,7 @@ const SearchImages = () => {
     };
     
     const requestBody = new URLSearchParams({
-      filename: filename as string
+      title: title as string
     });
     const response = await apiPost(
 		requestBody,
@@ -62,10 +62,10 @@ const SearchImages = () => {
               margin="normal"
               required
               fullWidth
-              name="filename"
-              label="filename"
-              id="filename"
-              autoComplete="filename"
+              name="title"
+              label="title"
+              id="title"
+              autoComplete="title"
             />
             <Button
               type = "submit"
