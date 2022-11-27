@@ -1,19 +1,15 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { Navigate } from 'react-router-dom';
 import { GenericProps } from '../types/GenericTypes';
-import { Navigate, redirect } from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -27,30 +23,6 @@ const RegisterImage = (props: GenericProps) => {
     const data = new FormData(event.currentTarget);
     const { title, description, keywords, author, captureDate, storageDate, filename } =
       Object.fromEntries(data.entries());
-    console.log({ title, description, keywords, author, captureDate, storageDate, filename });
-    alert(
-      `You're seeing this because you tried to register an Image!\n Filename: ${filename}\n. \nRegisterImage isn't implemented yet, so you can't register an Image.`
-    );
-
-    // This part will be responsible for sending the data to the server
-    // Why not 8080???
-    const response = await fetch('http://localhost:3000/RestAD-1.0-SNAPSHOT/api/registerImage', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        title,
-        description,
-        keywords,
-        author,
-        captureDate,
-        storageDate,
-        filename
-      })
-    });
-    const result = await response.json();
-    console.log(result);
   };
 
   return (
@@ -126,6 +98,10 @@ const RegisterImage = (props: GenericProps) => {
               id="filename"
               autoComplete="filename"
             />
+            <Button variant="contained" component="label">
+              Upload File
+              <input type="file" hidden />
+            </Button>
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Register
             </Button>

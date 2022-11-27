@@ -10,7 +10,7 @@ const DeleteImage = () => {
     const { filename } = Object.fromEntries(data.entries());
     console.log({ filename });
     alert(
-      `You're seeing this because you tried to delete an Image!\n Filename: ${filename}\n. \DeleteImages isn't implemented yet, so you can't delete an Image.`
+      `You're seeing this because you tried to delete an Image!\n Filename: ${filename}\n. DeleteImages isn't implemented yet, so you can't delete an Image.`
     );
 
     // This part will be responsible for sending the data to the server

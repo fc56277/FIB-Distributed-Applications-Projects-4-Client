@@ -19,7 +19,7 @@ const SearchImages = () => {
     const { filename } = Object.fromEntries(data.entries());
     console.log({ filename });
     alert(
-      `You're seeing this because you tried to search for an Image!\n Filename: ${filename}\n. \SearchImages isn't implemented yet, so you can't search for an Image.`
+      `You're seeing this because you tried to search for an Image!\n Filename: ${filename}\n. SearchImages isn't implemented yet, so you can't search for an Image.`
     );
 
     // This part will be responsible for sending the data to the server

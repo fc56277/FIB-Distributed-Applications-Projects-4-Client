@@ -9,7 +9,6 @@ import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { RawAxiosRequestHeaders } from 'axios';
 import * as React from 'react';
 import { REGISTER_ENDPOINT, SERVER_ENDPOINTS } from '../config/constants';
 import { LoginProps } from '../types/LoginTypes';
