@@ -68,35 +68,29 @@ const RegisterImage = (props: GenericProps) => {
       alert('Please select a file');
       return;
     }
-    const base64 = await fileToBase64(file)
-      .then((result) => {
-        if (result) {
-          return result;
-        } else {
-          alert('Failed to convert file to base64');
-          return null;
-        }
-      })
-      .catch((error) => {
-        alert('Error converting file to base64');
-        console.error(error);
-        return null;
-      });
+    const base64 = await fileToBase64(file).then((result) => {
+      if (result) {
+        return result;
+      } else {
+        throw new Error('Failed to convert file to base64');
+      }
+    });
 
-    const image = {
+    const requestBody = new URLSearchParams({
       title,
       description,
       keywords,
       author,
       capture: captureDate,
       file: base64
-    };
+    });
 
-    console.debug(JSON.stringify(image));
+    console.debug(JSON.stringify(requestBody));
 
-    const response = axios.post(registerImageUrl, image, {
+    const response = axios.post(registerImageUrl, requestBody, {
       headers: {
-        username: props.headerToken
+        username: props.headerToken,
+        'Content-Type': 'application/x-www-form-urlencoded'
       }
     });
 

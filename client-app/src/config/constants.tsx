@@ -54,10 +54,10 @@ const SERVER_ENDPOINTS = {
   registerUserUrl: `${API_BASE}/api/user/register`,
   loginUrl: `${API_BASE}/api/user/login`,
   menuUrl: `${API_BASE}/api/menu`,
-  registerImageUrl: `${API_BASE}/api/registerImage`,
-  listImagesUrl: `${API_BASE}/api/list`,
-  modifyImagesUrl: `${API_BASE}/api/modify`,
-  deleteImageUrl: `${API_BASE}/api/delete`,
+  registerImageUrl: `${API_BASE}/api/image/register`,
+  listImagesUrl: `${API_BASE}/api/image/list`,
+  modifyImagesUrl: `${API_BASE}/api/image/update`,
+  deleteImageUrl: `${API_BASE}/api/image/delete`,
   searchImageUrl: `${API_BASE}/api/search`
 };
 
