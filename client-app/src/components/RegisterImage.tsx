@@ -17,11 +17,12 @@ import { fileToBase64 } from '../utils/file';
 const theme = createTheme();
 
 const RegisterImage = (props: GenericProps) => {
+  const [file, setFile] = useState<File | null>(null);
+
   // Navigate/redirect user if token is empty
   if (!props.headerToken || props.headerToken.length === 0) {
     return <Navigate to={'/'} />;
   }
-  const [file, setFile] = useState<File | null>(null);
   const { registerImageUrl } = SERVER_ENDPOINTS;
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
