@@ -14,7 +14,7 @@ function App() {
   const updateToken = (token: string) => {
     console.log(`Updating token-header with value: ${token}`);
     setToken(token);
-  }
+  };
 
   // Debug - remove later
   useEffect(() => {
@@ -31,19 +31,13 @@ function App() {
           <Route
             key={login.route}
             path={login.route}
-            element={login.component({ updateStateCallback: (token: string) => updateToken(token) })} // Pass updateToken-function down to the component as a callback function
+            element={login.component({
+              updateStateCallback: (token: string) => updateToken(token)
+            })} // Pass updateToken-function down to the component as a callback function
           />
-          <Route 
-            key={register.route}
-            path={register.route}
-            element={register.component()}
-          />
+          <Route key={register.route} path={register.route} element={register.component()} />
           {endpoints.map((endpoint) => (
-            <Route
-              key={endpoint.route}
-              path={endpoint.route}
-              element={endpoint.component(token)}
-            />
+            <Route key={endpoint.route} path={endpoint.route} element={endpoint.component(token)} />
           ))}
           <Route path="/" element={<Navigate replace to={login.route} />} />
           <Route path="*" element={<NotFound />} />

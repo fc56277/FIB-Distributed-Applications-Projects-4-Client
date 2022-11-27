@@ -13,21 +13,19 @@ const ListImages = () => {
     //alert(`You're seeing this because you tried to search for an Image!\n Filename: ${filename}\n. \SearchImages isn't implemented yet, so you can't search for an Image.`);
 
     // This part will be responsible for sending the data to the server
-                                                // Why not 8080???
+    // Why not 8080???
     const response = await fetch('http://localhost:3000/RestAD-1.0-SNAPSHOT/api/listImages', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({filename})
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ filename })
     });
     const result = await response.json();
     console.log(result);
   };
 
-  return (
-    <div>Not implemented</div>
-  )
-}
+  return <div>Not implemented</div>;
+};
 
 export default ListImages;

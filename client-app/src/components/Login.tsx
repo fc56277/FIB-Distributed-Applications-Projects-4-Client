@@ -21,7 +21,6 @@ const Login = ({ updateStateCallback }: LoginProps) => {
   const { loginUrl: loginApiUrl } = SERVER_ENDPOINTS;
   const registerUserEndpoint = REGISTER_ENDPOINT;
 
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -31,13 +30,18 @@ const Login = ({ updateStateCallback }: LoginProps) => {
     // This part will be responsible for sending the data to the server
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/json',
+      Accept: 'application/json'
     };
     const requestBody = new URLSearchParams({
       username: username as string,
       password: password as string
     });
-    const response = await apiPost(requestBody, loginApiUrl, headers, 'Login failed in POST request');
+    const response = await apiPost(
+      requestBody,
+      loginApiUrl,
+      headers,
+      'Login failed in POST request'
+    );
     console.log(JSON.stringify(response));
     console.log(JSON.stringify(response?.headers));
     // The following part is to check if the username-header value (which gets set by the server) actually
@@ -61,9 +65,8 @@ const Login = ({ updateStateCallback }: LoginProps) => {
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+            alignItems: 'center'
+          }}>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -91,12 +94,7 @@ const Login = ({ updateStateCallback }: LoginProps) => {
               id="password"
               autoComplete="current-password"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign In
             </Button>
             <Grid container>
@@ -111,6 +109,6 @@ const Login = ({ updateStateCallback }: LoginProps) => {
       </Container>
     </ThemeProvider>
   );
-}
+};
 
 export default Login;

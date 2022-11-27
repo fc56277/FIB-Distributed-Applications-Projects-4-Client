@@ -24,13 +24,18 @@ const RegisterUser = () => {
     // This part will be responsible for sending the data to the server
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/json',
+      Accept: 'application/json'
     };
     const requestBody = new URLSearchParams({
       username: username as string,
       password: password as string
     });
-    const response = await apiPost(requestBody, apiRegisterUrl, headers, 'User-registration failed in POST request');
+    const response = await apiPost(
+      requestBody,
+      apiRegisterUrl,
+      headers,
+      'User-registration failed in POST request'
+    );
     alert(`User-registration finished with result: ${response?.data.message}`);
   };
 
@@ -43,9 +48,8 @@ const RegisterUser = () => {
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+            alignItems: 'center'
+          }}>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -73,12 +77,7 @@ const RegisterUser = () => {
               id="password"
               autoComplete="current-password"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Register
             </Button>
           </Box>
@@ -86,6 +85,6 @@ const RegisterUser = () => {
       </Container>
     </ThemeProvider>
   );
-}
+};
 
 export default RegisterUser;

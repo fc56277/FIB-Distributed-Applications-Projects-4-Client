@@ -1,6 +1,5 @@
-
 interface LoginProps {
-    updateStateCallback: (username: string) => void;
-};
+  updateStateCallback: (username: string) => void;
+}
 
 export type { LoginProps };

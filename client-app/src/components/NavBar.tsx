@@ -14,16 +14,15 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { NavBarProps } from '../types/NavBarTypes';
 
-
 const useStyles = makeStyles((theme: Theme) => ({
   flexGrow: {
-    flex: '1',
+    flex: '1'
   },
   button: {
     color: 'white',
     my: 2,
     display: 'flex',
-    backgroundColor: 'black',
+    backgroundColor: 'black'
   }
 }));
 
@@ -40,7 +39,6 @@ const NavBar = (props: NavBarProps) => {
     setAnchorElNav(null);
   };
 
-
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -52,8 +50,7 @@ const NavBar = (props: NavBarProps) => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
-            >
+              color="inherit">
               <MenuIcon />
             </IconButton>
             <Menu
@@ -61,19 +58,18 @@ const NavBar = (props: NavBarProps) => {
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: 'bottom',
-                horizontal: 'center',
+                horizontal: 'center'
               }}
               keepMounted
               transformOrigin={{
                 vertical: 'top',
-                horizontal: 'left',
+                horizontal: 'left'
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
+                display: { xs: 'block', md: 'none' }
+              }}>
               {endpoints.map((endpoint) => (
                 <MenuItem key={endpoint.displayName} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{endpoint.displayName}</Typography>
@@ -94,10 +90,9 @@ const NavBar = (props: NavBarProps) => {
                   display: 'flex',
                   '&:hover': {
                     backgroundColor: '#fff',
-                    color: '#3c52b2',
-                }
-                }}
-              >
+                    color: '#3c52b2'
+                  }
+                }}>
                 {endpoint.displayName}
               </Button>
             ))}
@@ -106,5 +101,5 @@ const NavBar = (props: NavBarProps) => {
       </Container>
     </AppBar>
   );
-}
+};
 export default NavBar;

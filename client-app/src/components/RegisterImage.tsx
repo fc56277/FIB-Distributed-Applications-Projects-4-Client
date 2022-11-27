@@ -20,23 +20,34 @@ const theme = createTheme();
 const RegisterImage = (props: GenericProps) => {
   // Navigate/redirect user if token is empty
   if (!props.headerToken || props.headerToken.length === 0) {
-    return (<Navigate to={'/'}/>);
+    return <Navigate to={'/'} />;
   }
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const {title, description, keywords, author, captureDate, storageDate, filename} = Object.fromEntries(data.entries());
-    console.log({title, description, keywords, author, captureDate, storageDate, filename});
-    alert(`You're seeing this because you tried to register an Image!\n Filename: ${filename}\n. \nRegisterImage isn't implemented yet, so you can't register an Image.`);
+    const { title, description, keywords, author, captureDate, storageDate, filename } =
+      Object.fromEntries(data.entries());
+    console.log({ title, description, keywords, author, captureDate, storageDate, filename });
+    alert(
+      `You're seeing this because you tried to register an Image!\n Filename: ${filename}\n. \nRegisterImage isn't implemented yet, so you can't register an Image.`
+    );
 
     // This part will be responsible for sending the data to the server
-                                                // Why not 8080???
+    // Why not 8080???
     const response = await fetch('http://localhost:3000/RestAD-1.0-SNAPSHOT/api/registerImage', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({title, description, keywords, author, captureDate, storageDate, filename})
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title,
+        description,
+        keywords,
+        author,
+        captureDate,
+        storageDate,
+        filename
+      })
     });
     const result = await response.json();
     console.log(result);
@@ -51,9 +62,8 @@ const RegisterImage = (props: GenericProps) => {
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+            alignItems: 'center'
+          }}>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -116,12 +126,7 @@ const RegisterImage = (props: GenericProps) => {
               id="filename"
               autoComplete="filename"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Register
             </Button>
           </Box>
@@ -129,6 +134,6 @@ const RegisterImage = (props: GenericProps) => {
       </Container>
     </ThemeProvider>
   );
-}
+};
 
 export default RegisterImage;
