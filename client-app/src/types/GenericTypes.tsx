@@ -1,6 +1,5 @@
-
 interface GenericProps {
-    headerToken: string;
-};
+  headerToken: string;
+}
 
 export type { GenericProps };

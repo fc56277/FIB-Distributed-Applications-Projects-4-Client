@@ -14,29 +14,29 @@ import { apiPost } from '../utils/requests';
 const theme = createTheme();
 
 const SearchImages = () => {
-  const { searchImageUrl: apiSearchUrl } = SERVER_ENDPOINTS; 
-				
+  const { searchImageUrl: apiSearchUrl } = SERVER_ENDPOINTS;
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // If no time, implement only one of the searches by title i.e.
     const { title } = Object.fromEntries(data.entries());
 
-	// This part will be responsible for sending the data to the server
+    // This part will be responsible for sending the data to the server
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/json',
+      Accept: 'application/json'
     };
-    
+
     const requestBody = new URLSearchParams({
       title: title as string
     });
     const response = await apiPost(
-		requestBody,
-		apiSearchUrl,
-		headers,
-		'Image-Search failed in POST request'
-	);
+      requestBody,
+      apiSearchUrl,
+      headers,
+      'Image-Search failed in POST request'
+    );
     alert(`Image-Search finished with result: ${response?.data.message}`);
   };
 
@@ -67,11 +67,7 @@ const SearchImages = () => {
               id="title"
               autoComplete="title"
             />
-            <Button
-              type = "submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}>
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Search
             </Button>
           </Box>
