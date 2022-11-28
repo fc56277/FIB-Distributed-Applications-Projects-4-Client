@@ -1,11 +1,6 @@
 import axios from 'axios';
 
-const apiPost = async (
-  requestBody: URLSearchParams,
-  url: string,
-  headers?: object,
-  errorMsg?: string
-) => {
+const apiPost = async (requestBody: URLSearchParams, url: string, headers?: object) => {
   if (
     headers &&
     !Object.keys(headers).includes('username') &&
@@ -16,11 +11,7 @@ const apiPost = async (
       'Warning: sending POST-request without username-header required for authorization.'
     );
   }
-  const response = await axios.post(url, requestBody, { headers }).catch((error) => {
-    console.log(error);
-    alert(errorMsg ?? `Post request failed with error ${error}`);
-    return null;
-  });
+  const response = await axios.post(url, requestBody, { headers });
   return response;
 };
 

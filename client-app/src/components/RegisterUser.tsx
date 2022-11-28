@@ -7,7 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import * as React from 'react';
+import { FormEvent, useState } from 'react';
 import { SERVER_ENDPOINTS } from '../config/constants';
 import { apiPost } from '../utils/requests';
 
@@ -15,8 +15,10 @@ const theme = createTheme();
 
 const RegisterUser = () => {
   const { registerUserUrl: apiRegisterUrl } = SERVER_ENDPOINTS;
+  const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const { username, password } = Object.fromEntries(data.entries());
@@ -30,13 +32,15 @@ const RegisterUser = () => {
       username: username as string,
       password: password as string
     });
-    const response = await apiPost(
-      requestBody,
-      apiRegisterUrl,
-      headers,
-      'User-registration failed in POST request'
-    );
-    alert(`User-registration finished with result: ${response?.data.message}`);
+    apiPost(requestBody, apiRegisterUrl, headers)
+      .then((response) => {
+        console.log(JSON.stringify(response));
+        setSuccessMsg('User successfully registered');
+      })
+      .catch((error) => {
+        console.error(error);
+        setErrorMsg('User registration failed.');
+      });
   };
 
   return (
@@ -80,6 +84,8 @@ const RegisterUser = () => {
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Register
             </Button>
+            {successMsg && <Typography color="success">{successMsg}</Typography>}
+            {errorMsg && <Typography color="error">Error: {errorMsg}</Typography>}
           </Box>
         </Box>
       </Container>

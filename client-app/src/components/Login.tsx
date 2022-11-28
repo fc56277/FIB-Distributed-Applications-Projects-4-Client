@@ -21,6 +21,7 @@ const theme = createTheme();
 const Login = () => {
   const dispatch = useDispatch();
   const [loggedIn, setLoggedIn] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const { loginUrl: loginApiUrl } = SERVER_ENDPOINTS;
   const registerUserEndpoint = REGISTER_ENDPOINT;
@@ -40,14 +41,10 @@ const Login = () => {
       username: username as string,
       password: password as string
     });
-    const response = await apiPost(
-      requestBody,
-      loginApiUrl,
-      headers,
-      'Login failed in POST request'
-    );
-    console.log(JSON.stringify(response));
-    console.log(JSON.stringify(response?.headers));
+    const response = await apiPost(requestBody, loginApiUrl, headers).catch((error) => {
+      console.error(error);
+      setErrorMsg('Invalid username or password');
+    });
     // The following part is to check if the username-header value (which gets set by the server) actually
     // exists. If it does, then we update the state of the parent-component, namely App.tsx - so that it can
     // pass it down to its children (the other pages). If it doesn't exist, then we don't update the parent,
@@ -56,8 +53,6 @@ const Login = () => {
     if (token) {
       dispatch(setToken(token));
       setLoggedIn(true);
-    } else {
-      alert('Login failed, failed in POST-request');
     }
   };
 
@@ -105,6 +100,10 @@ const Login = () => {
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                 Sign In
               </Button>
+              {
+                // Add an error message with red text if the login failed
+                errorMsg && <Typography color="error">{errorMsg}</Typography>
+              }
               <Grid container>
                 <Grid item>
                   <Link href={registerUserEndpoint.route} variant="body2">
@@ -118,7 +117,7 @@ const Login = () => {
       </ThemeProvider>
     );
     return result;
-  }, [loggedIn]);
+  }, [loggedIn, errorMsg]);
 };
 
 export default Login;

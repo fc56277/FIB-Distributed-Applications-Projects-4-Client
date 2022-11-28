@@ -7,7 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import * as React from 'react';
+import { FormEvent, useState } from 'react';
 import { SERVER_ENDPOINTS } from '../config/constants';
 import { apiPost } from '../utils/requests';
 
@@ -15,8 +15,10 @@ const theme = createTheme();
 
 const SearchImages = () => {
   const { searchImageUrl: apiSearchUrl } = SERVER_ENDPOINTS;
+  const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // If no time, implement only one of the searches by title i.e.
@@ -31,13 +33,15 @@ const SearchImages = () => {
     const requestBody = new URLSearchParams({
       title: title as string
     });
-    const response = await apiPost(
-      requestBody,
-      apiSearchUrl,
-      headers,
-      'Image-Search failed in POST request'
-    );
-    alert(`Image-Search finished with result: ${response?.data.message}`);
+    apiPost(requestBody, apiSearchUrl, headers)
+      .then((response) => {
+        console.log(JSON.stringify(response));
+        setSuccessMsg('Image successfully searched');
+      })
+      .catch((error) => {
+        console.error(error);
+        setErrorMsg('Image search failed.');
+      });
   };
 
   return (
@@ -70,6 +74,8 @@ const SearchImages = () => {
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Search
             </Button>
+            {successMsg && <Typography color="success">{successMsg}</Typography>}
+            {errorMsg && <Typography color="error">Error: {errorMsg}</Typography>}
           </Box>
         </Box>
       </Container>
