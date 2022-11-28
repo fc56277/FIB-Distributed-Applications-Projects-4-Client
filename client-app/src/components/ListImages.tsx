@@ -70,8 +70,13 @@ const ListImages = () => {
               </Typography>
               <ul>
                 {images.map((image) => (
-                  <li>
+                  <li
+                    key={
+                      Math.random().toString(36).substring(2, 15) +
+                      Math.random().toString(36).substring(2, 15)
+                    }>
                     <img src={image.base64} alt={image.title} />
+                    <p>{image.description}</p>
                   </li>
                 ))}
               </ul>
