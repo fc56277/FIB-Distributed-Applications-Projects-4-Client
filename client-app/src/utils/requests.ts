@@ -1,5 +1,19 @@
 import axios from 'axios';
 
+const apiGet = async (url: string, headers?: object) => {
+  try {
+    if (headers && !Object.keys(headers).includes('username')) {
+      console.warn(
+        'Warning: sending GET-request without username-header required for authorization.'
+      );
+    }
+    const response = await axios.get(url, { headers });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const apiPost = async (requestBody: URLSearchParams, url: string, headers?: object) => {
   if (
     headers &&
@@ -15,4 +29,4 @@ const apiPost = async (requestBody: URLSearchParams, url: string, headers?: obje
   return response;
 };
 
-export { apiPost };
+export { apiGet, apiPost };
