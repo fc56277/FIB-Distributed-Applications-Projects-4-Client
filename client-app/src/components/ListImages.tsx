@@ -9,13 +9,15 @@ import Typography from '@mui/material/Typography';
 import { FormEvent, useState } from 'react';
 import { SERVER_ENDPOINTS } from '../config/constants';
 import { useSelector } from '../store';
+import { Image } from '../types/GenericTypes';
 import { apiGet } from '../utils/requests';
 
 const theme = createTheme();
 
 const ListImages = () => {
   const token = useSelector((state) => state.auth.bearerToken);
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<Image[]>([]);
+  const [error, setError] = useState<string>('');
   const { listImagesUrl } = SERVER_ENDPOINTS;
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -25,8 +27,18 @@ const ListImages = () => {
       'Content-Type': 'application/x-www-form-urlencoded',
       Accept: 'application/json'
     };
-    const response = await apiGet(listImagesUrl, headers);
-    console.log(response);
+    apiGet(listImagesUrl, headers)
+      .then((response) => {
+        console.log(JSON.stringify(response));
+        if (!response) {
+          return;
+        }
+        setImages(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+        setError('Failed to list images.');
+      });
   };
 
   return (
@@ -51,7 +63,22 @@ const ListImages = () => {
               List All Images!
             </Button>
           </Box>
+          {images.length > 0 && (
+            <Box sx={{ mt: 5 }}>
+              <Typography component="h1" variant="h5">
+                Images
+              </Typography>
+              <ul>
+                {images.map((image) => (
+                  <li>
+                    <img src={image.base64} alt={image.title} />
+                  </li>
+                ))}
+              </ul>
+            </Box>
+          )}
         </Box>
+        {error && <Box sx={{ mt: 5 }}>{error}</Box>}
       </Container>
     </ThemeProvider>
   );
