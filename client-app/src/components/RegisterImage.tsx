@@ -19,6 +19,8 @@ const theme = createTheme();
 const RegisterImage = () => {
   const token = useSelector((state) => state.auth.bearerToken);
   const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string>('');
+  const [success, setSuccess] = useState<string>('');
 
   // Navigate/redirect user if token is empty
   if (!token || token === '') {
@@ -113,11 +115,11 @@ const RegisterImage = () => {
 
     // Check if the response status is 400-500 range
     if (response.status >= 400 && response.status < 510) {
-      alert('Failed to register image');
+      setError(`Failed to register image: ${response.data.message}`);
       return;
     }
 
-    alert('Image successfully registered');
+    setSuccess('Successfully registered image');
     console.log(JSON.stringify(response));
   };
 
@@ -211,6 +213,8 @@ const RegisterImage = () => {
               Register
             </Button>
           </Box>
+          {error && <Typography color="error">{error}</Typography>}
+          {success && <Typography color="success">{success}</Typography>}
         </Box>
       </Container>
     </ThemeProvider>
