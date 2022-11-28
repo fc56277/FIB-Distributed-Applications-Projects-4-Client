@@ -1,24 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import NotFound from './components/404';
 import NavBar from './components/NavBar';
-import { GENERIC_CLIENT_ENDPOINTS, LOGIN_ENDPOINT, REGISTER_ENDPOINT } from './config/constants';
+import {
+  GENERIC_CLIENT_ENDPOINTS,
+  LOGIN_ENDPOINT,
+  MENU_ENDPOINT,
+  REGISTER_ENDPOINT
+} from './config/constants';
+import { useSelector } from './store';
 
 function App() {
+  const token = useSelector((state) => state.auth.bearerToken);
+
   const endpoints = GENERIC_CLIENT_ENDPOINTS;
   const login = LOGIN_ENDPOINT;
   const register = REGISTER_ENDPOINT;
-
-  const [token, setToken] = useState('');
-  const updateToken = (token: string) => {
-    console.log(`Updating token-header with value: ${token}`);
-    setToken(token);
-  };
+  const menu = MENU_ENDPOINT;
 
   // Debug - remove later
   useEffect(() => {
-    console.log(`Token has changed - current value: ${token}`);
+    console.debug(`Token in App.tsx: ${token}`);
   }, [token]);
 
   const isLoggedIn = token.length > 0;
@@ -31,15 +34,17 @@ function App() {
           <Route
             key={login.route}
             path={login.route}
-            element={login.component({
-              updateStateCallback: (token: string) => updateToken(token)
-            })} // Pass updateToken-function down to the component as a callback function
+            element={login.component()} // Pass updateToken-function down to the component as a callback function
           />
           <Route key={register.route} path={register.route} element={register.component()} />
           {endpoints.map((endpoint) => (
             <Route key={endpoint.route} path={endpoint.route} element={endpoint.component(token)} />
           ))}
-          <Route path="/" element={<Navigate replace to={login.route} />} />
+          {isLoggedIn ? (
+            <Route key={menu.route} path="/" element={menu.component(token)} />
+          ) : (
+            <Route key={menu.route} path="/" element={<Navigate to={login.route} />} />
+          )}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

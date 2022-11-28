@@ -11,16 +11,17 @@ import axios from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { SERVER_ENDPOINTS } from '../config/constants';
-import { GenericProps } from '../types/GenericTypes';
+import { useSelector } from '../store';
 import { fileToBase64 } from '../utils/file';
 
 const theme = createTheme();
 
-const RegisterImage = (props: GenericProps) => {
+const RegisterImage = () => {
+  const token = useSelector((state) => state.auth.bearerToken);
   const [file, setFile] = useState<File | null>(null);
 
   // Navigate/redirect user if token is empty
-  if (!props.headerToken || props.headerToken.length === 0) {
+  if (!token || token === '') {
     return <Navigate to={'/'} />;
   }
   const { registerImageUrl } = SERVER_ENDPOINTS;
@@ -92,7 +93,7 @@ const RegisterImage = (props: GenericProps) => {
     const response = await axios.post(registerImageUrl, requestBody, {
       headers: {
         // prettier-ignore
-        'username': props.headerToken,
+        'username': token,
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     });
@@ -174,6 +175,15 @@ const RegisterImage = (props: GenericProps) => {
               margin="normal"
               required
               fullWidth
+              name="creator"
+              label="Creator (who uploaded the photo):"
+              id="creator"
+              autoComplete="creator"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
               name="captureDate"
               label="Date when the photo was taken (YYYY-MM-DD):"
               id="captureDate"
@@ -183,7 +193,7 @@ const RegisterImage = (props: GenericProps) => {
               Upload File
               <input type="file" hidden onChange={handleFileChange} />
             </Button>
-            {file && <p>File uploaded: {file.name}</p>}
+            {file && <p>File chosen: {file.name}</p>}
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Register
             </Button>

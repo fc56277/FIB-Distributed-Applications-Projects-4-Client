@@ -5,17 +5,17 @@ import { DefaultRootStateProps } from './types';
 // ----------------------------------------------------------------------
 
 const initialState: DefaultRootStateProps['auth'] = {
-    bearerToken: ''
+  bearerToken: ''
 };
 
 const slice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {
-        setToken(state, action: PayloadAction<string>) {
-            state.bearerToken = action.payload;
-        },
+  name: 'auth',
+  initialState,
+  reducers: {
+    setToken(state, action: PayloadAction<string>) {
+      state.bearerToken = action.payload;
     }
+  }
 });
 
 // Reducer

@@ -1,6 +1,7 @@
 import DeleteImage from '../components/DeleteImage';
 import ListImages from '../components/ListImages';
 import Login from '../components/Login';
+import Menu from '../components/Menu';
 import ModifyImage from '../components/ModifyImage';
 import RegisterImage from '../components/RegisterImage';
 import RegisterUser from '../components/RegisterUser';
@@ -17,6 +18,12 @@ const REGISTER_ENDPOINT: Endpoint = {
   displayName: 'Register User',
   route: '/register-user',
   component: RegisterUser
+};
+
+const MENU_ENDPOINT: Endpoint = {
+  displayName: 'Menu',
+  route: '/menu',
+  component: Menu
 };
 
 const GENERIC_CLIENT_ENDPOINTS: Endpoint[] = [
@@ -61,4 +68,10 @@ const SERVER_ENDPOINTS = {
   searchImageUrl: `${API_BASE}/api/search`
 };
 
-export { GENERIC_CLIENT_ENDPOINTS, LOGIN_ENDPOINT, REGISTER_ENDPOINT, SERVER_ENDPOINTS };
+export {
+  GENERIC_CLIENT_ENDPOINTS,
+  LOGIN_ENDPOINT,
+  MENU_ENDPOINT,
+  REGISTER_ENDPOINT,
+  SERVER_ENDPOINTS
+};

@@ -1,10 +1,9 @@
 // third-party
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 
 // project imports
-import authReducer from "./slices/auth";
+import authReducer from './slices/auth';
 // ==============================|| COMBINE REDUCER ||============================== //
-
 
 const reducer = combineReducers({
   auth: authReducer

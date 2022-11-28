@@ -1,8 +1,7 @@
-
 type DefaultRootStateProps = {
-    auth: {
-        bearerToken: string;
-    };
+  auth: {
+    bearerToken: string;
+  };
 };
 
 export type { DefaultRootStateProps };
