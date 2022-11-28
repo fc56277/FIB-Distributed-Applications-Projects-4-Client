@@ -47,10 +47,22 @@ const RegisterImage = () => {
       alert('Please enter keywords');
       return;
     }
+    // Check if keywords matches comma-separated list of words
+    const keywordsRegex = /^[a-zA-Z]+(,[a-zA-Z]+)*$/;
+    if (!keywordsRegex.test(keywords)) {
+      alert('Keywords must be a comma-separated list of words');
+      return;
+    }
 
     const author = data.get('author') as string;
     if (author === '') {
       alert('Please enter an author');
+      return;
+    }
+
+    const creator = data.get('creator') as string;
+    if (creator === '') {
+      alert('Please enter a creator');
       return;
     }
 
@@ -84,6 +96,7 @@ const RegisterImage = () => {
       description,
       keywords,
       author,
+      creator,
       capture: captureDate,
       file: base64
     });
