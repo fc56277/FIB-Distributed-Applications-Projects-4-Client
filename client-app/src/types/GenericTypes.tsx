@@ -9,8 +9,8 @@ interface Image {
   keywords: Array<string>;
   author: string;
   creator: string;
-  captureDate: string;
-  storageDate: string;
+  captureDate: Object;
+  storageDate: Object;
   base64: string;
 }
 

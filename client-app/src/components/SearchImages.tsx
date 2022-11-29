@@ -212,7 +212,7 @@ const SearchImages = () => {
                 <p>Title: {image.title}</p>
                 <p>Description: {image.description}</p>
                 <p>Author: {image.author}</p>
-                <p>Capture date: {image.captureDate}</p>
+                <p>Capture date: {image.captureDate.toString()}</p>
                 <p>Keywords: {image.keywords}</p>
               </div>
               {image.creator === username && (
