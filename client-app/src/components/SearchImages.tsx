@@ -79,6 +79,16 @@ const SearchImages = () => {
           {successMsg && <Typography color="success">{successMsg}</Typography>}
           {errorMsg && <Typography color="error">Error: {errorMsg}</Typography>}
         </Box>
+        {images.map((image) => (
+          <div key={image.id}>
+            <img src={image.base64} alt={image.title} />
+            <p>{image.title}</p>
+            <p>{image.description}</p>
+            <p>{image.author}</p>
+            <p>{image.captureDate}</p>
+            <p>{image.keywords}</p>
+          </div>
+        ))}
       </Container>
     </ThemeProvider>
   );
