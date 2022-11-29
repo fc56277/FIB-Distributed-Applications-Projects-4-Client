@@ -1,5 +1,3 @@
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -83,22 +81,19 @@ const SearchImages = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main">
         <CssBaseline />
+        <Typography component="h1" variant="h5" sx={{ marginTop: 5 }}>
+          Search by title, description, keywords, author, or creation date.
+        </Typography>
         <Box
           sx={{
             marginTop: 8,
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: 'row',
             alignItems: 'center'
           }}>
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Search by title, description, keywords, author, or creation date.
-          </Typography>
-          <Box component="form" onSubmit={titleSearch} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={titleSearch} noValidate sx={{ mt: 1, marginRight: 5 }}>
             <TextField
               margin="normal"
               required
@@ -112,7 +107,7 @@ const SearchImages = () => {
               Search
             </Button>
           </Box>
-          <Box component="form" onSubmit={idSearch} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={idSearch} noValidate sx={{ mt: 1, marginRight: 5 }}>
             <TextField
               margin="normal"
               required
@@ -126,7 +121,7 @@ const SearchImages = () => {
               Search
             </Button>
           </Box>
-          <Box component="form" onSubmit={authorSearch} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={authorSearch} noValidate sx={{ mt: 1, marginRight: 5 }}>
             <TextField
               margin="normal"
               required
@@ -140,22 +135,23 @@ const SearchImages = () => {
               Search
             </Button>
           </Box>
-          <Box component="form" onSubmit={dateSearch} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={dateSearch} noValidate sx={{ mt: 1, marginRight: 5 }}>
             <TextField
               margin="normal"
               required
               fullWidth
               name="date"
-              label="Creation Date (YYYY-MM-DD)"
+              label="Creation Date"
               id="date"
               type="date"
               autoComplete="date"
+              InputLabelProps={{ shrink: true }}
             />
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Search
             </Button>
           </Box>
-          <Box component="form" onSubmit={keywordsSearch} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={keywordsSearch} noValidate sx={{ mt: 1, marginRight: 5 }}>
             <TextField
               margin="normal"
               required
@@ -172,16 +168,24 @@ const SearchImages = () => {
           {successMsg && <Typography color="success">{successMsg}</Typography>}
           {errorMsg && <Typography color="error">Error: {errorMsg}</Typography>}
         </Box>
-        {images.map((image) => (
-          <div key={image.id}>
-            <img src={image.base64} alt={image.title} />
-            <p>Title: {image.title}</p>
-            <p>Description: {image.description}</p>
-            <p>Author: {image.author}</p>
-            <p>Capture date: {image.captureDate}</p>
-            <p>Keywords: {image.keywords}</p>
-          </div>
-        ))}
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center'
+          }}>
+          {images.map((image) => (
+            <div key={image.id}>
+              <img src={image.base64} alt={image.title} />
+              <p>Title: {image.title}</p>
+              <p>Description: {image.description}</p>
+              <p>Author: {image.author}</p>
+              <p>Capture date: {image.captureDate}</p>
+              <p>Keywords: {image.keywords}</p>
+            </div>
+          ))}
+        </Box>
       </Container>
     </ThemeProvider>
   );
