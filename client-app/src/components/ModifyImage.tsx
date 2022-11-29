@@ -32,7 +32,21 @@ const ModifyImage = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
+    const id = data.get('id') as string;
+    if (id === '') {
+      alert('Please enter an id');
+      return;
+    }
+    let idNumber;
+    try {
+      idNumber = parseInt(id);
+    } catch (error) {
+      alert('Please enter a valid id (number)');
+      return;
+    }
+
     const params: any = {
+      id: idNumber,
       title: null,
       description: null,
       keywords: null,
