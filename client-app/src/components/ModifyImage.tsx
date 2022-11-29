@@ -114,13 +114,14 @@ const ModifyImage = () => {
 
     const response = await apiPost(updateImageUrl, requestBody, headers).catch((error) => {
       console.error(error);
-      setError(error.message);
+      setError(error.message || error.toString());
       setSuccess('');
     });
 
     // Check if the response status is 400-500 range
     if (!response || (response.status >= 400 && response.status < 510)) {
-      setError(`Failed to register image: ${response?.data.message}`);
+      const errorMessage = (response as any).error;
+      setError(`Failed to register image: ${errorMessage}`);
       setSuccess('');
       return;
     }

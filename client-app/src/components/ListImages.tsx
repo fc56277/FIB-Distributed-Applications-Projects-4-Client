@@ -50,7 +50,7 @@ const ListImages = () => {
       })
       .catch((error) => {
         console.error(error);
-        setErrorMsg('Failed to list images> ' + error.message);
+        setErrorMsg('Failed to list images: ' + error.message || error.toString());
         setSuccessMsg('');
       });
   };

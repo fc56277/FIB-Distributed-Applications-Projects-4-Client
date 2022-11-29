@@ -40,7 +40,7 @@ const RegisterUser = () => {
       })
       .catch((error) => {
         console.error(error);
-        setErrorMsg('User registration failed: ' + error.message);
+        setErrorMsg('User registration failed: ' + error.message || error.toString());
         setSuccessMsg('');
       });
   };
