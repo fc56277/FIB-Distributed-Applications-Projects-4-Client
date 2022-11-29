@@ -9,6 +9,7 @@ import { FormEvent, useState } from 'react';
 import { SERVER_ENDPOINTS } from '../config/constants';
 import { useSelector } from '../store';
 import { Image } from '../types/GenericTypes';
+import { handleDelete } from '../utils/delete';
 import {
   handleAuthorSearch,
   handleDateSearch,
@@ -25,8 +26,17 @@ const SearchImages = () => {
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
-  const { searchByTitle, searchById, searchByAuthor, searchByCreationDate, searchByKeywords } =
-    SERVER_ENDPOINTS;
+  // Decode 'token' from base64
+  const username = Buffer.from(token, 'base64').toString();
+
+  const {
+    deleteImageUrl,
+    searchByTitle,
+    searchById,
+    searchByAuthor,
+    searchByCreationDate,
+    searchByKeywords
+  } = SERVER_ENDPOINTS;
 
   const updateFeedback = (res: any) => {
     if (res) {
@@ -77,6 +87,25 @@ const SearchImages = () => {
       setSuccessMsg('');
     });
     updateFeedback(res);
+  };
+
+  const deleteImage = (id: number) => {
+    // Take input from alert
+    const input = prompt('Are you sure you want to delete this image? (y/n)');
+    if (input === 'y') {
+      handleDelete(deleteImageUrl, id, token)
+        .then((res) => {
+          setSuccessMsg(res.data.message);
+          setErrorMsg('');
+        })
+        .catch((err) => {
+          setErrorMsg(`Image deletion failed: ${err.message}`);
+          setSuccessMsg('');
+        });
+    } else {
+      setErrorMsg('Image deletion cancelled.');
+      setSuccessMsg('');
+    }
   };
 
   return (
@@ -176,14 +205,26 @@ const SearchImages = () => {
             alignItems: 'center'
           }}>
           {images.map((image) => (
-            <div key={image.id}>
-              <img src={image.base64} alt={image.title} />
-              <p>Title: {image.title}</p>
-              <p>Description: {image.description}</p>
-              <p>Author: {image.author}</p>
-              <p>Capture date: {image.captureDate}</p>
-              <p>Keywords: {image.keywords}</p>
-            </div>
+            <>
+              <div key={image.id} style={{ marginRight: 5 }}>
+                <img src={image.base64} alt={image.title} />
+                <p>Title: {image.title}</p>
+                <p>Description: {image.description}</p>
+                <p>Author: {image.author}</p>
+                <p>Capture date: {image.captureDate}</p>
+                <p>Keywords: {image.keywords}</p>
+              </div>
+              {image.creator === username && (
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() => handleDelete(deleteImageUrl, image.id, token)}>
+                  Delete
+                </Button>
+              )}
+            </>
           ))}
         </Box>
       </Container>

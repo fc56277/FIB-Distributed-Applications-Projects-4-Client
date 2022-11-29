@@ -7,12 +7,12 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import axios from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { SERVER_ENDPOINTS } from '../config/constants';
 import { useSelector } from '../store';
 import { fileToBase64 } from '../utils/file';
+import { apiPost } from '../utils/requests';
 
 const theme = createTheme();
 
@@ -103,24 +103,27 @@ const RegisterImage = () => {
       file: base64
     });
 
-    console.debug(JSON.stringify(requestBody));
+    const headers = {
+      // prettier-ignore
+      'username': token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Accept: 'application/json'
+    };
 
-    const response = await axios.post(registerImageUrl, requestBody, {
-      headers: {
-        // prettier-ignore
-        'username': token,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
+    const response = await apiPost(registerImageUrl, requestBody, headers).catch((error) => {
+      console.error(error);
+      setError(error.message);
     });
 
     // Check if the response status is 400-500 range
-    if (response.status >= 400 && response.status < 510) {
-      setError(`Failed to register image: ${response.data.message}`);
+    if (!response || (response.status >= 400 && response.status < 510)) {
+      setError(`Failed to register image: ${response?.data.message}`);
+      setSuccess('');
       return;
     }
 
     setSuccess('Successfully registered image');
-    console.log(JSON.stringify(response));
+    setError('');
   };
 
   // Create a function that shows the name of the image file once it's uploaded

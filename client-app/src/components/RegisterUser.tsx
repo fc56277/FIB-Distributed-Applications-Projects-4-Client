@@ -32,7 +32,7 @@ const RegisterUser = () => {
       username: username as string,
       password: password as string
     });
-    apiPost(requestBody, apiRegisterUrl, headers)
+    apiPost(apiRegisterUrl, requestBody, headers)
       .then((response) => {
         console.log(JSON.stringify(response));
         setSuccessMsg('User successfully registered');

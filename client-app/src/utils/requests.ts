@@ -14,7 +14,7 @@ const apiGet = async (url: string, headers?: object) => {
   }
 };
 
-const apiPost = async (requestBody: URLSearchParams, url: string, headers?: object) => {
+const apiPost = async (url: string, requestBody: URLSearchParams, headers?: object) => {
   if (
     headers &&
     !Object.keys(headers).includes('username') &&
