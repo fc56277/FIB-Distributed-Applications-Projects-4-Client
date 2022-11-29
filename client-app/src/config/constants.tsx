@@ -60,16 +60,15 @@ const SERVER_ENDPOINTS = {
   pingUrl: `${API_BASE}/api/ping`,
   registerUserUrl: `${API_BASE}/api/user/register`,
   loginUrl: `${API_BASE}/api/user/login`,
-  menuUrl: `${API_BASE}/api/menu`,
   registerImageUrl: `${API_BASE}/api/image/register`,
   listImagesUrl: `${API_BASE}/api/image/list`,
   modifyImagesUrl: `${API_BASE}/api/image/update`,
   deleteImageUrl: `${API_BASE}/api/image/delete`,
-  searchById: `${API_BASE}/api/searchID`,
-  searchByTitle: `${API_BASE}/api/searchTitle`,
-  searchByCreationDate: `${API_BASE}/api/searchCreationDate`,
-  searchByAuthor: `${API_BASE}/api/searchAuthor`,
-  searchByKeywords: `${API_BASE}/api/searchKeywords`
+  searchById: `${API_BASE}/api/image/searchID`,
+  searchByTitle: `${API_BASE}/api/image/searchTitle`,
+  searchByCreationDate: `${API_BASE}/api/image/searchCreationDate`,
+  searchByAuthor: `${API_BASE}/api/image/searchAuthor`,
+  searchByKeywords: `${API_BASE}/api/image/searchKeywords`
 };
 
 export {
