@@ -116,7 +116,7 @@ const RegisterImage = () => {
       return;
     }
 
-    setSuccess('Successfully registered image');
+    setSuccess(response.data.message);
     setError('');
   };
 

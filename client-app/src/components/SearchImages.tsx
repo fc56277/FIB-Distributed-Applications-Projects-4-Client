@@ -212,30 +212,34 @@ const SearchImages = () => {
             flexDirection: 'row',
             alignItems: 'center'
           }}>
-          {images.map((image) => (
-            <div key={image.id} style={{ marginRight: 5 }}>
-              <img src={image.base64} alt={image.title} />
-              <p>ID: {image.id}</p>
-              <p>Title: {image.title}</p>
-              <p>Description: {image.description}</p>
-              <p>Author: {image.author}</p>
-              <p>
-                Capture date:{' '}
-                {`${image.captureDate.year}-${image.captureDate.month}-${image.captureDate.day}`}
-              </p>
-              <p>Keywords: {image.keywords}</p>
-              {image.creator === username && (
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={() => deleteImage(image.id)}>
-                  Delete
-                </Button>
-              )}
-            </div>
-          ))}
+          {images.length == 0 ? (
+            <p>{'No images to show :('}</p>
+          ) : (
+            images.map((image) => (
+              <div key={image.id} style={{ marginRight: 5 }}>
+                <img src={image.base64} alt={image.title} />
+                <p>ID: {image.id}</p>
+                <p>Title: {image.title}</p>
+                <p>Description: {image.description}</p>
+                <p>Author: {image.author}</p>
+                <p>
+                  Capture date:{' '}
+                  {`${image.captureDate.year}-${image.captureDate.month}-${image.captureDate.day}`}
+                </p>
+                <p>Keywords: {image.keywords}</p>
+                {image.creator === username && (
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={() => deleteImage(image.id)}>
+                    Delete
+                  </Button>
+                )}
+              </div>
+            ))
+          )}
         </Box>
       </Container>
     </ThemeProvider>

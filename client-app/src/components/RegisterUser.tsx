@@ -35,12 +35,12 @@ const RegisterUser = () => {
     apiPost(apiRegisterUrl, requestBody, headers)
       .then((response) => {
         console.log(JSON.stringify(response));
-        setSuccessMsg('User successfully registered');
+        setSuccessMsg(response.data.message);
         setErrorMsg('');
       })
       .catch((error) => {
         console.error(error);
-        setErrorMsg('User registration failed.');
+        setErrorMsg('User registration failed: ' + error.message);
         setSuccessMsg('');
       });
   };
