@@ -10,15 +10,19 @@ import { FormEvent, useState } from 'react';
 import { SERVER_ENDPOINTS } from '../config/constants';
 import { useSelector } from '../store';
 import { Image } from '../types/GenericTypes';
+import { handleDelete } from '../utils/delete';
 import { apiGet } from '../utils/requests';
-
 const theme = createTheme();
 
 const ListImages = () => {
   const token = useSelector((state) => state.auth.bearerToken);
   const [images, setImages] = useState<Image[]>([]);
-  const [error, setError] = useState<string>('');
-  const { listImagesUrl } = SERVER_ENDPOINTS;
+  const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+  const { deleteImageUrl, listImagesUrl } = SERVER_ENDPOINTS;
+
+  // Decode 'token' from base64
+  const username = Buffer.from(token, 'base64').toString();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,12 +37,34 @@ const ListImages = () => {
         if (!response) {
           return;
         }
+        setSuccessMsg(response.data.message);
+        setErrorMsg('');
         setImages(response.data);
       })
       .catch((error) => {
         console.error(error);
-        setError('Failed to list images.');
+        setErrorMsg('Failed to list images> ' + error.message);
+        setSuccessMsg('');
       });
+  };
+
+  const deleteImage = (id: number) => {
+    // Take input from alert
+    const input = prompt('Are you sure you want to delete this image? (y/n)');
+    if (input === 'y') {
+      handleDelete(deleteImageUrl, id, token)
+        .then((res) => {
+          setSuccessMsg(res.data.message);
+          setErrorMsg('');
+        })
+        .catch((err) => {
+          setErrorMsg(`Image deletion failed: ${err.message}`);
+          setSuccessMsg('');
+        });
+    } else {
+      setErrorMsg('Image deletion cancelled.');
+      setSuccessMsg('');
+    }
   };
 
   return (
@@ -62,28 +88,40 @@ const ListImages = () => {
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               List All Images!
             </Button>
+            {successMsg && <Typography color="success">{successMsg}</Typography>}
+            {errorMsg && <Typography color="error">Error: {errorMsg}</Typography>}
           </Box>
-          {images.length > 0 && (
-            <Box sx={{ mt: 5 }}>
-              <Typography component="h1" variant="h5">
-                Images
-              </Typography>
-              <ul>
-                {images.map((image) => (
-                  <li key={image.id}>
-                    <img src={image.base64} alt={image.title} />
-                    <p>Title: {image.title}</p>
-                    <p>Description: {image.description}</p>
-                    <p>Author: {image.author}</p>
-                    <p>Capture date: {image.captureDate}</p>
-                    <p>Keywords: {image.keywords}</p>
-                  </li>
-                ))}
-              </ul>
-            </Box>
-          )}
         </Box>
-        {error && <Box sx={{ mt: 5 }}>{error}</Box>}
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center'
+          }}>
+          {images.map((image) => (
+            <>
+              <div key={image.id} style={{ marginRight: 5 }}>
+                <img src={image.base64} alt={image.title} />
+                <p>Title: {image.title}</p>
+                <p>Description: {image.description}</p>
+                <p>Author: {image.author}</p>
+                <p>Capture date: {image.captureDate.toString()}</p>
+                <p>Keywords: {image.keywords}</p>
+              </div>
+              {image.creator === username && (
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() => deleteImage(image.id)}>
+                  Delete
+                </Button>
+              )}
+            </>
+          ))}
+        </Box>
       </Container>
     </ThemeProvider>
   );
