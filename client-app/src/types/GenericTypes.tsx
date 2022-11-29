@@ -2,6 +2,12 @@ interface GenericProps {
   headerToken: string;
 }
 
+interface Date {
+  year: number;
+  month: number;
+  day: number;
+}
+
 interface Image {
   id: number;
   title: string;
@@ -9,8 +15,8 @@ interface Image {
   keywords: Array<string>;
   author: string;
   creator: string;
-  captureDate: Object;
-  storageDate: Object;
+  captureDate: Date;
+  storageDate: Date;
   base64: string;
 }
 
