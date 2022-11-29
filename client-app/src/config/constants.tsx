@@ -1,4 +1,3 @@
-import DeleteImage from '../components/DeleteImage';
 import ListImages from '../components/ListImages';
 import Login from '../components/Login';
 import Menu from '../components/Menu';
@@ -41,11 +40,6 @@ const GENERIC_CLIENT_ENDPOINTS: Endpoint[] = [
     displayName: 'Modify Image',
     route: '/modify-image',
     component: ModifyImage
-  },
-  {
-    displayName: 'Delete Image',
-    route: '/delete-image',
-    component: DeleteImage
   },
   {
     displayName: 'Search Images',

@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { Buffer } from 'buffer';
 import { FormEvent, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { SERVER_ENDPOINTS } from '../config/constants';
 import { useSelector } from '../store';
 import { Image } from '../types/GenericTypes';
@@ -26,6 +27,11 @@ const SearchImages = () => {
   const token = useSelector((state) => state.auth.bearerToken);
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+
+  // Navigate/redirect user if token is empty
+  if (!token || token === '') {
+    return <Navigate to={'/'} />;
+  }
 
   // Decode 'token' from base64
   const username = Buffer.from(token, 'base64').toString();
@@ -206,15 +212,13 @@ const SearchImages = () => {
             alignItems: 'center'
           }}>
           {images.map((image) => (
-            <>
-              <div key={image.id} style={{ marginRight: 5 }}>
-                <img src={image.base64} alt={image.title} />
-                <p>Title: {image.title}</p>
-                <p>Description: {image.description}</p>
-                <p>Author: {image.author}</p>
-                <p>Capture date: {image.captureDate.toString()}</p>
-                <p>Keywords: {image.keywords}</p>
-              </div>
+            <div key={image.id} style={{ marginRight: 5 }}>
+              <img src={image.base64} alt={image.title} />
+              <p>Title: {image.title}</p>
+              <p>Description: {image.description}</p>
+              <p>Author: {image.author}</p>
+              <p>Capture date: {image.captureDate.toString()}</p>
+              <p>Keywords: {image.keywords}</p>
               {image.creator === username && (
                 <Button
                   type="submit"
@@ -225,7 +229,7 @@ const SearchImages = () => {
                   Delete
                 </Button>
               )}
-            </>
+            </div>
           ))}
         </Box>
       </Container>

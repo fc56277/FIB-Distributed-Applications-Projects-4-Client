@@ -8,6 +8,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { Buffer } from 'buffer';
 import { FormEvent, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { SERVER_ENDPOINTS } from '../config/constants';
 import { useSelector } from '../store';
 import { Image } from '../types/GenericTypes';
@@ -21,6 +22,11 @@ const ListImages = () => {
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const { deleteImageUrl, listImagesUrl } = SERVER_ENDPOINTS;
+
+  // Navigate/redirect user if token is empty
+  if (!token || token === '') {
+    return <Navigate to={'/'} />;
+  }
 
   // Decode 'token' from base64
   const username = Buffer.from(token, 'base64').toString();
@@ -101,15 +107,13 @@ const ListImages = () => {
             alignItems: 'center'
           }}>
           {images.map((image) => (
-            <>
-              <div key={image.id} style={{ marginRight: 5 }}>
-                <img src={image.base64} alt={image.title} />
-                <p>Title: {image.title}</p>
-                <p>Description: {image.description}</p>
-                <p>Author: {image.author}</p>
-                <p>Capture date: {image.captureDate.toString()}</p>
-                <p>Keywords: {image.keywords}</p>
-              </div>
+            <div key={image.id} style={{ marginRight: 5 }}>
+              <img src={image.base64} alt={image.title} />
+              <p>Title: {image.title}</p>
+              <p>Description: {image.description}</p>
+              <p>Author: {image.author}</p>
+              <p>Capture date: {image.captureDate.toString()}</p>
+              <p>Keywords: {image.keywords}</p>
               {image.creator === username && (
                 <Button
                   type="submit"
@@ -120,7 +124,7 @@ const ListImages = () => {
                   Delete
                 </Button>
               )}
-            </>
+            </div>
           ))}
         </Box>
       </Container>
