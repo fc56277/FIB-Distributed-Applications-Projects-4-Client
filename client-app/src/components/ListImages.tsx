@@ -109,6 +109,7 @@ const ListImages = () => {
           {images.map((image) => (
             <div key={image.id} style={{ marginRight: 5 }}>
               <img src={image.base64} alt={image.title} />
+              <p>ID: {image.id}</p>
               <p>Title: {image.title}</p>
               <p>Description: {image.description}</p>
               <p>Author: {image.author}</p>
