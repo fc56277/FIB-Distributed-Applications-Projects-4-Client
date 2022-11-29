@@ -62,12 +62,6 @@ const RegisterImage = () => {
       return;
     }
 
-    const creator = data.get('creator') as string;
-    if (creator === '') {
-      alert('Please enter a creator');
-      return;
-    }
-
     const captureDate = data.get('captureDate') as string;
     if (captureDate === '') {
       alert('Please enter a capture date');
@@ -98,7 +92,6 @@ const RegisterImage = () => {
       description,
       keywords,
       author,
-      creator,
       capture: captureDate,
       file: base64
     });
@@ -113,6 +106,7 @@ const RegisterImage = () => {
     const response = await apiPost(registerImageUrl, requestBody, headers).catch((error) => {
       console.error(error);
       setError(error.message);
+      setSuccess('');
     });
 
     // Check if the response status is 400-500 range
@@ -188,15 +182,6 @@ const RegisterImage = () => {
               label="Author (who took the photo):"
               id="author"
               autoComplete="author"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="creator"
-              label="Creator (who uploaded the photo):"
-              id="creator"
-              autoComplete="creator"
             />
             <TextField
               margin="normal"
