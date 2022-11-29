@@ -26,7 +26,7 @@ const ModifyImage = () => {
   if (!token || token === '') {
     return <Navigate to={'/'} />;
   }
-  const { registerImageUrl } = SERVER_ENDPOINTS;
+  const { updateImageUrl } = SERVER_ENDPOINTS;
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -98,7 +98,7 @@ const ModifyImage = () => {
       Accept: 'application/json'
     };
 
-    const response = await apiPost(registerImageUrl, requestBody, headers).catch((error) => {
+    const response = await apiPost(updateImageUrl, requestBody, headers).catch((error) => {
       console.error(error);
       setError(error.message);
       setSuccess('');
