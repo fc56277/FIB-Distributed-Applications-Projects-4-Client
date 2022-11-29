@@ -36,10 +36,12 @@ const RegisterUser = () => {
       .then((response) => {
         console.log(JSON.stringify(response));
         setSuccessMsg('User successfully registered');
+        setErrorMsg('');
       })
       .catch((error) => {
         console.error(error);
         setErrorMsg('User registration failed.');
+        setSuccessMsg('');
       });
   };
 
