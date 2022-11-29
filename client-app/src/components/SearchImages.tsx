@@ -82,11 +82,11 @@ const SearchImages = () => {
         {images.map((image) => (
           <div key={image.id}>
             <img src={image.base64} alt={image.title} />
-            <p>{image.title}</p>
-            <p>{image.description}</p>
-            <p>{image.author}</p>
-            <p>{image.captureDate}</p>
-            <p>{image.keywords}</p>
+            <p>Title: {image.title}</p>
+            <p>Description: {image.description}</p>
+            <p>Author: {image.author}</p>
+            <p>Capture date: {image.captureDate}</p>
+            <p>Keywords: {image.keywords}</p>
           </div>
         ))}
       </Container>
