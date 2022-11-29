@@ -8,6 +8,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { FormEvent, useState } from 'react';
+import { SERVER_ENDPOINTS } from '../config/constants';
 import { useSelector } from '../store';
 import { Image } from '../types/GenericTypes';
 import { handleTitleSearch } from '../utils/search';
@@ -19,6 +20,9 @@ const SearchImages = () => {
   const token = useSelector((state) => state.auth.bearerToken);
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+
+  const { searchByTitle, searchById, searchByAuthor, searchByCreationDate, searchByKeywords } =
+    SERVER_ENDPOINTS;
 
   const updateFeedback = (res: any) => {
     if (res) {
@@ -32,7 +36,7 @@ const SearchImages = () => {
   };
 
   const titleSearch = async (event: FormEvent<HTMLFormElement>) => {
-    handleTitleSearch(event, token)
+    handleTitleSearch(event, searchByTitle, token)
       .then((res) => {
         updateFeedback(res);
       })

@@ -1,11 +1,11 @@
 import { FormEvent } from 'react';
-import { SERVER_ENDPOINTS } from '../config/constants';
 import { apiGet } from './requests';
 
-const { searchByTitle, searchById, searchByAuthor, searchByCreationDate, searchByKeywords } =
-  SERVER_ENDPOINTS;
-
-const handleTitleSearch = async (event: FormEvent<HTMLFormElement>, token: string) => {
+const handleTitleSearch = async (
+  event: FormEvent<HTMLFormElement>,
+  searchByTitle: string,
+  token: string
+) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
   const { title } = Object.fromEntries(data.entries());
@@ -19,7 +19,11 @@ const handleTitleSearch = async (event: FormEvent<HTMLFormElement>, token: strin
   return apiGet(searchByTitle + `/${title}`, headers);
 };
 
-const handleIdSearch = async (event: FormEvent<HTMLFormElement>, token: string) => {
+const handleIdSearch = async (
+  event: FormEvent<HTMLFormElement>,
+  searchById: string,
+  token: string
+) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
   const { id } = Object.fromEntries(data.entries());
@@ -33,7 +37,11 @@ const handleIdSearch = async (event: FormEvent<HTMLFormElement>, token: string) 
   return apiGet(searchById + `/${id}`, headers);
 };
 
-const handleAuthorSearch = async (event: FormEvent<HTMLFormElement>, token: string) => {
+const handleAuthorSearch = async (
+  event: FormEvent<HTMLFormElement>,
+  searchByAuthor: string,
+  token: string
+) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
   const { author } = Object.fromEntries(data.entries());
@@ -47,7 +55,11 @@ const handleAuthorSearch = async (event: FormEvent<HTMLFormElement>, token: stri
   return apiGet(searchByAuthor + `/${author}`, headers);
 };
 
-const handleDateSearch = async (event: FormEvent<HTMLFormElement>, token: string) => {
+const handleDateSearch = async (
+  event: FormEvent<HTMLFormElement>,
+  searchByCreationDate: string,
+  token: string
+) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
   const { date } = Object.fromEntries(data.entries());
@@ -61,7 +73,11 @@ const handleDateSearch = async (event: FormEvent<HTMLFormElement>, token: string
   return apiGet(searchByCreationDate + `/${date}`, headers);
 };
 
-const handleKeywordsSearch = async (event: FormEvent<HTMLFormElement>, token: string) => {
+const handleKeywordsSearch = async (
+  event: FormEvent<HTMLFormElement>,
+  searchByKeywords: string,
+  token: string
+) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
   const { keywords } = Object.fromEntries(data.entries());
