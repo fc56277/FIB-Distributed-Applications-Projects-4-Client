@@ -41,7 +41,7 @@ const Login = () => {
       username: username as string,
       password: password as string
     });
-    const response = await apiPost(requestBody, loginApiUrl, headers).catch((error) => {
+    const response = await apiPost(loginApiUrl, requestBody, headers).catch((error) => {
       console.error(error);
       setErrorMsg('Invalid username or password');
     });
