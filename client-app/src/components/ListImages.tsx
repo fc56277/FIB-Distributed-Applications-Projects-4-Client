@@ -63,6 +63,8 @@ const ListImages = () => {
         .then((res) => {
           setSuccessMsg(res.data.message);
           setErrorMsg('');
+          // Remove the image from the state-list
+          setImages(images.filter((image) => image.id !== id));
         })
         .catch((err) => {
           setErrorMsg(`Image deletion failed: ${err.message}`);

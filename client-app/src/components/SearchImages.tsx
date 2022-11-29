@@ -104,6 +104,7 @@ const SearchImages = () => {
         .then((res) => {
           setSuccessMsg(res.data.message);
           setErrorMsg('');
+          setImages(images.filter((image) => image.id !== id));
         })
         .catch((err) => {
           setErrorMsg(`Image deletion failed: ${err.message}`);
