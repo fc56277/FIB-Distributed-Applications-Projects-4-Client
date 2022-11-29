@@ -65,7 +65,11 @@ const SERVER_ENDPOINTS = {
   listImagesUrl: `${API_BASE}/api/image/list`,
   modifyImagesUrl: `${API_BASE}/api/image/update`,
   deleteImageUrl: `${API_BASE}/api/image/delete`,
-  searchImageUrl: `${API_BASE}/api/search`
+  searchById: `${API_BASE}/api/searchID`,
+  searchByTitle: `${API_BASE}/api/searchTitle`,
+  searchByCreationDate: `${API_BASE}/api/searchCreationDate`,
+  searchByAuthor: `${API_BASE}/api/searchAuthor`,
+  searchByKeywords: `${API_BASE}/api/searchKeywords`
 };
 
 export {

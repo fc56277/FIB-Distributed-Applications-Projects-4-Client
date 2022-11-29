@@ -8,39 +8,36 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { FormEvent, useState } from 'react';
-import { SERVER_ENDPOINTS } from '../config/constants';
-import { apiPost } from '../utils/requests';
+import { useSelector } from '../store';
+import { Image } from '../types/GenericTypes';
+import { handleTitleSearch } from '../utils/search';
 
 const theme = createTheme();
 
 const SearchImages = () => {
-  const { searchImageUrl: apiSearchUrl } = SERVER_ENDPOINTS;
+  const [images, setImages] = useState<Image[]>([]);
+  const token = useSelector((state) => state.auth.bearerToken);
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // If no time, implement only one of the searches by title i.e.
-    const { title } = Object.fromEntries(data.entries());
+  const updateFeedback = (res: any) => {
+    if (res) {
+      setImages(res.data);
+      setSuccessMsg('Search successful.');
+      setErrorMsg('');
+    } else {
+      setSuccessMsg('');
+      setErrorMsg('Search failed');
+    }
+  };
 
-    // This part will be responsible for sending the data to the server
-    const headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Accept: 'application/json'
-    };
-
-    const requestBody = new URLSearchParams({
-      title: title as string
-    });
-    apiPost(requestBody, apiSearchUrl, headers)
-      .then((response) => {
-        console.log(JSON.stringify(response));
-        setSuccessMsg('Image successfully searched');
+  const titleSearch = async (event: FormEvent<HTMLFormElement>) => {
+    handleTitleSearch(event, token)
+      .then((res) => {
+        updateFeedback(res);
       })
-      .catch((error) => {
-        console.error(error);
-        setErrorMsg('Image search failed.');
+      .catch((err) => {
+        setErrorMsg('Title-search failed: ' + err);
       });
   };
 
@@ -59,9 +56,9 @@ const SearchImages = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Search
+            Search by title, description, keywords, author, or creation date.
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={titleSearch} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -74,9 +71,9 @@ const SearchImages = () => {
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Search
             </Button>
-            {successMsg && <Typography color="success">{successMsg}</Typography>}
-            {errorMsg && <Typography color="error">Error: {errorMsg}</Typography>}
           </Box>
+          {successMsg && <Typography color="success">{successMsg}</Typography>}
+          {errorMsg && <Typography color="error">Error: {errorMsg}</Typography>}
         </Box>
       </Container>
     </ThemeProvider>
